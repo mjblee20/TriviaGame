@@ -1,4 +1,4 @@
-var questionSet = [{
+let questionSet = [{
     question:  "What is the title of The Allman Brothers Band instrumental used as the theme to the BBC motoring show, 'Top Gear'?",
     answer: ["Jessica", "Angela", "Erica", "Sandra"],
     correctAnswer: "Jessica"
@@ -38,29 +38,67 @@ var questionSet = [{
     question: "Which M83 album is the song 'Midnight City' featured in?",
     answer: ["Hurry Up, We're Dreaming", "Saturdays = Youth", "Before the Dawn Heals Us", "Junk"],
     correctAnswer: "Hurry Up, We're Dreaming"
-},
+}]
+
+let timeLimit = 5;
+let correct = 0;
+let incorrect = 0;
 
 
-$("#start").on("click", function(){
-    console.log("game started");
-    $("#main").empty();
-    for (let i = 0; i < questionSet.length; i++) {
+$("#start").on("click", function() {
+    gameStart();
+})
 
+function counter() {
+    timeLimit--;
+    $("#counter").text(timeLimit + " Seconds");
+    if (timeLimit <= 0) {
+        console.log("You've run out of time");
+        gameOver();
     }
- 
+}
 
+function gameStart() {
+    // creates a timer that ticks every second
+    timer = setInterval(counter, 1000);
+    // remove all content inside main. Just the start button as of now
+    $("#main").empty();
+    $("#main").prepend("<h2 id='timeRemain'>Remaining Time: <span id='counter'>120 Seconds</span>");
+    for (let i = 0; i < questionSet.length; i++) {
+        $("#main").append("<h2>" + questionSet[i].question + 
+        "</h2>");
+        for (let j = 0; j < questionSet[i].answer.length; j++) {
+            let inputName = "question"+i;
+            $("#main").append("<input type='radio' name='" + inputName + "' value='" +questionSet[i].answer[j]+"'>" + questionSet[i].answer[j]);
+        }
+    }
+    
+}
 
+function gameOver() {
+    // console.log("ingameover")
+    // this goes through every question and checks if the checked answers are the correct ones
+    for (let i = 0; i < questionSet.length; i++) {
+        // console.log("in gameOver Loops", i);
+        // console.log($("input[name='question"+i+"']:checked"));
+        $.each($("input[name='question"+i+"']:checked"),function() {
+            if ($("input[name='question"+i+"']:checked").val() === questionSet[i].correctAnswer) {
+                // if checked answer is correct, correct count increases
+                correct++;
+            } else {
+                // if checked answer is incorrect, incorrect count increases
+                incorrect++;
+            }
+        })
+    }
+    result();
+}
 
-    // utilizing ajax for the set of questions
-    // // gets a set of trivia questions with correct answers and incorrect answers
-    // $.ajax({
-    //     url: "https://opentdb.com/api.php?amount=10",
-    //     method: "GET"
-    // }).then(function(response) {
-    //     console.log(response.length);
-    //     for (let i = 0; i < response.length; i++) {
-            
-    //     }
-
-    // });
-});
+function result() {
+    clearInterval(timer);
+    $("#main #timeRemain").remove();
+    $("#main").text("All Done!")
+    $("#main").append("<p>Questions Correct:" + correct + "</p>");
+    $("#main").append("<p>Questions Incorrect:" + incorrect + "</p>");
+    $("#main").append("<p>Questions Correct:" + correct + "</p>");
+}
