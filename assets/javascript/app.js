@@ -40,7 +40,7 @@ let questionSet = [{
     correctAnswer: "Hurry Up, We're Dreaming"
 }]
 
-let timeLimit = 5;
+let timeLimit = 120;
 let correct = 0;
 let incorrect = 0;
 
@@ -62,7 +62,7 @@ function gameStart() {
     // creates a timer that ticks every second
     timer = setInterval(counter, 1000);
     // remove all content inside main. Just the start button as of now
-    $("#main").empty();
+    $("#start").hide();
     $("#main").prepend("<h2 id='timeRemain'>Remaining Time: <span id='counter'>120 Seconds</span>");
     for (let i = 0; i < questionSet.length; i++) {
         $("#main").append("<h2>" + questionSet[i].question + 
@@ -72,7 +72,7 @@ function gameStart() {
             $("#main").append("<input type='radio' name='" + inputName + "' value='" +questionSet[i].answer[j]+"'>" + questionSet[i].answer[j]);
         }
     }
-    
+
 }
 
 function gameOver() {
@@ -96,9 +96,18 @@ function gameOver() {
 
 function result() {
     clearInterval(timer);
-    $("#main #timeRemain").remove();
-    $("#main").text("All Done!")
+    $("#main").empty();
+    $("#main").append("<h1>All Done!</h1>")
     $("#main").append("<p>Questions Correct:" + correct + "</p>");
     $("#main").append("<p>Questions Incorrect:" + incorrect + "</p>");
-    $("#main").append("<p>Questions Correct:" + correct + "</p>");
+    $("#main").append("<button id='restart'>Restart</button>")
+    $("#restart").on("click", function() {
+        $("#main").empty();
+        correct = 0;
+        incorrect = 0;
+        timeLimit = 120;
+        $("#start").show();
+        gameStart();
+    })
+    
 }
