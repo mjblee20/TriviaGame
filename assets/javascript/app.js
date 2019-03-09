@@ -65,7 +65,7 @@ function gameStart() {
     $("#start").hide();
     $("#main").prepend("<h2 id='timeRemain'>Remaining Time: <span id='counter'>120 Seconds</span></h2><br>");
     for (let i = 0; i < questionSet.length; i++) {
-        $("#main").append("<h2>Q" + (i+1) + ": " + questionSet[i].question + 
+        $("#main").append("<br><h2>Q" + (i+1) + ": " + questionSet[i].question + 
         "</h2>");
         for (let j = 0; j < questionSet[i].answer.length; j++) {
             let inputName = "question"+i;

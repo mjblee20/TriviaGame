@@ -1,3 +1,7 @@
+body {
+    background-image: url("../images/prism.png");
+}
+
 input {
     margin: 10px;
 }
@@ -6,4 +10,8 @@ input {
     text-align: center;
     font-weight: bold;
     color: red;
+}
+
+.jumbotron.text-center {
+    background: black;
 }
