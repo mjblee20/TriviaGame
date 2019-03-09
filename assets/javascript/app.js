@@ -63,13 +63,13 @@ function gameStart() {
     timer = setInterval(counter, 1000);
     // remove all content inside main. Just the start button as of now
     $("#start").hide();
-    $("#main").prepend("<h2 id='timeRemain'>Remaining Time: <span id='counter'>120 Seconds</span>");
+    $("#main").prepend("<h2 id='timeRemain'>Remaining Time: <span id='counter'>120 Seconds</span></h2><br>");
     for (let i = 0; i < questionSet.length; i++) {
-        $("#main").append("<h2>" + questionSet[i].question + 
+        $("#main").append("<h2>Q" + (i+1) + ": " + questionSet[i].question + 
         "</h2>");
         for (let j = 0; j < questionSet[i].answer.length; j++) {
             let inputName = "question"+i;
-            $("#main").append("<input type='radio' name='" + inputName + "' value='" +questionSet[i].answer[j]+"'>" + questionSet[i].answer[j]);
+            $("#main").append("<input type='radio' name='" + inputName + "' value='" +questionSet[i].answer[j]+"'>" + questionSet[i].answer[j] +"<br>");
         }
     }
 
